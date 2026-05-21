@@ -1,0 +1,775 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Bot Msg can run as a OneBot v11 HTTP proxy service backed by a OneBot HTTP/HTTPS or WS/WSS endpoint.",
+        "title": "Bot Msg OneBot API",
+        "contact": {},
+        "version": "0.1.0"
+    },
+    "basePath": "/",
+    "paths": {
+        "/delete_msg": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Deletes a message by message_id.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "messages"
+                ],
+                "summary": "Delete message",
+                "parameters": [
+                    {
+                        "description": "Message ID payload",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal_server.messageIDRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/bot_msg_pkg_onebot.EmptyResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/bot_msg_pkg_onebot.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/bot_msg_pkg_onebot.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/get_friend_list": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Gets the friend list from the configured OneBot v11 endpoint.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "lists"
+                ],
+                "summary": "Get friend list",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/bot_msg_pkg_onebot.AnyResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/bot_msg_pkg_onebot.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/get_group_list": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Gets the group list from the configured OneBot v11 endpoint.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "lists"
+                ],
+                "summary": "Get group list",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/bot_msg_pkg_onebot.AnyResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/bot_msg_pkg_onebot.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/get_group_member_list": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Gets group members by group_id.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "lists"
+                ],
+                "summary": "Get group member list",
+                "parameters": [
+                    {
+                        "description": "Group ID payload",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal_server.groupIDRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/bot_msg_pkg_onebot.AnyResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/bot_msg_pkg_onebot.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/bot_msg_pkg_onebot.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/get_login_info": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Gets configured bot login information exposed by this service.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "Get login info",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/bot_msg_pkg_onebot.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/bot_msg_internal_service.BotInfo"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/get_msg": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Gets a message by message_id.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "messages"
+                ],
+                "summary": "Get message",
+                "parameters": [
+                    {
+                        "description": "Message ID payload",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal_server.messageIDRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/bot_msg_pkg_onebot.AnyResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/bot_msg_pkg_onebot.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/bot_msg_pkg_onebot.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/get_status": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Gets current service status. In WS mode, status reflects whether the OneBot WebSocket is connected.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "Get status",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/bot_msg_pkg_onebot.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/bot_msg_internal_service.Status"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/get_version_info": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Gets service version and protocol information.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "Get version info",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/bot_msg_pkg_onebot.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/bot_msg_internal_service.VersionInfo"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/healthz": {
+            "get": {
+                "description": "Returns service health.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "Health check",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/send_group_msg": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Sends a group message through the configured OneBot v11 endpoint.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "messages"
+                ],
+                "summary": "Send group message",
+                "parameters": [
+                    {
+                        "description": "Group message payload",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal_server.sendGroupMsgRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/bot_msg_pkg_onebot.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/bot_msg_internal_service.SendResult"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/bot_msg_pkg_onebot.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/bot_msg_pkg_onebot.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/send_msg": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Sends a private or group message. If message_type is omitted, group_id takes precedence.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "messages"
+                ],
+                "summary": "Send message",
+                "parameters": [
+                    {
+                        "description": "Message payload",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal_server.sendMsgRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/bot_msg_pkg_onebot.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/bot_msg_internal_service.SendResult"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/bot_msg_pkg_onebot.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/bot_msg_pkg_onebot.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/send_private_msg": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Sends a private message through the configured OneBot v11 endpoint.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "messages"
+                ],
+                "summary": "Send private message",
+                "parameters": [
+                    {
+                        "description": "Private message payload",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal_server.sendPrivateMsgRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/bot_msg_pkg_onebot.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/bot_msg_internal_service.SendResult"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/bot_msg_pkg_onebot.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/bot_msg_pkg_onebot.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "bot_msg_internal_service.BotInfo": {
+            "type": "object",
+            "properties": {
+                "nickname": {
+                    "type": "string",
+                    "example": "bot_msg"
+                },
+                "user_id": {
+                    "type": "integer",
+                    "example": 10000
+                }
+            }
+        },
+        "bot_msg_internal_service.SendResult": {
+            "type": "object",
+            "properties": {
+                "message_id": {
+                    "type": "integer",
+                    "example": 100001
+                }
+            }
+        },
+        "bot_msg_internal_service.Status": {
+            "type": "object",
+            "properties": {
+                "good": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "online": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "bot_msg_internal_service.VersionInfo": {
+            "type": "object",
+            "properties": {
+                "app_name": {
+                    "type": "string",
+                    "example": "bot_msg"
+                },
+                "app_version": {
+                    "type": "string",
+                    "example": "0.1.0"
+                },
+                "protocol_version": {
+                    "type": "string",
+                    "example": "v11"
+                }
+            }
+        },
+        "bot_msg_pkg_onebot.AnyResponse": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "echo": {},
+                "retcode": {
+                    "type": "integer",
+                    "example": 0
+                },
+                "status": {
+                    "type": "string",
+                    "example": "ok"
+                }
+            }
+        },
+        "bot_msg_pkg_onebot.EmptyData": {
+            "type": "object"
+        },
+        "bot_msg_pkg_onebot.EmptyResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/bot_msg_pkg_onebot.EmptyData"
+                },
+                "echo": {},
+                "retcode": {
+                    "type": "integer",
+                    "example": 0
+                },
+                "status": {
+                    "type": "string",
+                    "example": "ok"
+                }
+            }
+        },
+        "bot_msg_pkg_onebot.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "echo": {},
+                "message": {
+                    "type": "string"
+                },
+                "retcode": {
+                    "type": "integer",
+                    "example": 10001
+                },
+                "status": {
+                    "type": "string",
+                    "example": "failed"
+                },
+                "wording": {
+                    "type": "string"
+                }
+            }
+        },
+        "bot_msg_pkg_onebot.Response": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "echo": {},
+                "message": {
+                    "type": "string"
+                },
+                "retcode": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "wording": {
+                    "type": "string"
+                }
+            }
+        },
+        "bot_msg_pkg_onebot.Segment": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "object",
+                    "additionalProperties": {}
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "internal_server.groupIDRequest": {
+            "type": "object",
+            "properties": {
+                "echo": {},
+                "group_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "internal_server.messageIDRequest": {
+            "type": "object",
+            "properties": {
+                "echo": {},
+                "message_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "internal_server.sendGroupMsgRequest": {
+            "type": "object",
+            "properties": {
+                "auto_escape": {
+                    "type": "boolean"
+                },
+                "echo": {},
+                "group_id": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/bot_msg_pkg_onebot.Segment"
+                    }
+                }
+            }
+        },
+        "internal_server.sendMsgRequest": {
+            "type": "object",
+            "properties": {
+                "auto_escape": {
+                    "type": "boolean"
+                },
+                "echo": {},
+                "group_id": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/bot_msg_pkg_onebot.Segment"
+                    }
+                },
+                "message_type": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "internal_server.sendPrivateMsgRequest": {
+            "type": "object",
+            "properties": {
+                "auto_escape": {
+                    "type": "boolean"
+                },
+                "echo": {},
+                "message": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/bot_msg_pkg_onebot.Segment"
+                    }
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

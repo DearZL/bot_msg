@@ -1,0 +1,485 @@
+basePath: /
+definitions:
+  bot_msg_internal_service.BotInfo:
+    properties:
+      nickname:
+        example: bot_msg
+        type: string
+      user_id:
+        example: 10000
+        type: integer
+    type: object
+  bot_msg_internal_service.SendResult:
+    properties:
+      message_id:
+        example: 100001
+        type: integer
+    type: object
+  bot_msg_internal_service.Status:
+    properties:
+      good:
+        example: true
+        type: boolean
+      online:
+        example: true
+        type: boolean
+    type: object
+  bot_msg_internal_service.VersionInfo:
+    properties:
+      app_name:
+        example: bot_msg
+        type: string
+      app_version:
+        example: 0.1.0
+        type: string
+      protocol_version:
+        example: v11
+        type: string
+    type: object
+  bot_msg_pkg_onebot.AnyResponse:
+    properties:
+      data: {}
+      echo: {}
+      retcode:
+        example: 0
+        type: integer
+      status:
+        example: ok
+        type: string
+    type: object
+  bot_msg_pkg_onebot.EmptyData:
+    type: object
+  bot_msg_pkg_onebot.EmptyResponse:
+    properties:
+      data:
+        $ref: '#/definitions/bot_msg_pkg_onebot.EmptyData'
+      echo: {}
+      retcode:
+        example: 0
+        type: integer
+      status:
+        example: ok
+        type: string
+    type: object
+  bot_msg_pkg_onebot.ErrorResponse:
+    properties:
+      echo: {}
+      message:
+        type: string
+      retcode:
+        example: 10001
+        type: integer
+      status:
+        example: failed
+        type: string
+      wording:
+        type: string
+    type: object
+  bot_msg_pkg_onebot.Response:
+    properties:
+      data: {}
+      echo: {}
+      message:
+        type: string
+      retcode:
+        type: integer
+      status:
+        type: string
+      wording:
+        type: string
+    type: object
+  bot_msg_pkg_onebot.Segment:
+    properties:
+      data:
+        additionalProperties: {}
+        type: object
+      type:
+        type: string
+    type: object
+  internal_server.groupIDRequest:
+    properties:
+      echo: {}
+      group_id:
+        type: integer
+    type: object
+  internal_server.messageIDRequest:
+    properties:
+      echo: {}
+      message_id:
+        type: integer
+    type: object
+  internal_server.sendGroupMsgRequest:
+    properties:
+      auto_escape:
+        type: boolean
+      echo: {}
+      group_id:
+        type: integer
+      message:
+        items:
+          $ref: '#/definitions/bot_msg_pkg_onebot.Segment'
+        type: array
+    type: object
+  internal_server.sendMsgRequest:
+    properties:
+      auto_escape:
+        type: boolean
+      echo: {}
+      group_id:
+        type: integer
+      message:
+        items:
+          $ref: '#/definitions/bot_msg_pkg_onebot.Segment'
+        type: array
+      message_type:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  internal_server.sendPrivateMsgRequest:
+    properties:
+      auto_escape:
+        type: boolean
+      echo: {}
+      message:
+        items:
+          $ref: '#/definitions/bot_msg_pkg_onebot.Segment'
+        type: array
+      user_id:
+        type: integer
+    type: object
+info:
+  contact: {}
+  description: Bot Msg can run as a OneBot v11 HTTP proxy service backed by a OneBot
+    HTTP/HTTPS or WS/WSS endpoint.
+  title: Bot Msg OneBot API
+  version: 0.1.0
+paths:
+  /delete_msg:
+    post:
+      consumes:
+      - application/json
+      description: Deletes a message by message_id.
+      parameters:
+      - description: Message ID payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server.messageIDRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/bot_msg_pkg_onebot.EmptyResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/bot_msg_pkg_onebot.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/bot_msg_pkg_onebot.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete message
+      tags:
+      - messages
+  /get_friend_list:
+    get:
+      description: Gets the friend list from the configured OneBot v11 endpoint.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/bot_msg_pkg_onebot.AnyResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/bot_msg_pkg_onebot.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get friend list
+      tags:
+      - lists
+  /get_group_list:
+    get:
+      description: Gets the group list from the configured OneBot v11 endpoint.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/bot_msg_pkg_onebot.AnyResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/bot_msg_pkg_onebot.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get group list
+      tags:
+      - lists
+  /get_group_member_list:
+    post:
+      consumes:
+      - application/json
+      description: Gets group members by group_id.
+      parameters:
+      - description: Group ID payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server.groupIDRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/bot_msg_pkg_onebot.AnyResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/bot_msg_pkg_onebot.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/bot_msg_pkg_onebot.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get group member list
+      tags:
+      - lists
+  /get_login_info:
+    get:
+      description: Gets configured bot login information exposed by this service.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/bot_msg_pkg_onebot.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/bot_msg_internal_service.BotInfo'
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Get login info
+      tags:
+      - system
+  /get_msg:
+    post:
+      consumes:
+      - application/json
+      description: Gets a message by message_id.
+      parameters:
+      - description: Message ID payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server.messageIDRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/bot_msg_pkg_onebot.AnyResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/bot_msg_pkg_onebot.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/bot_msg_pkg_onebot.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get message
+      tags:
+      - messages
+  /get_status:
+    get:
+      description: Gets current service status. In WS mode, status reflects whether
+        the OneBot WebSocket is connected.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/bot_msg_pkg_onebot.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/bot_msg_internal_service.Status'
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Get status
+      tags:
+      - system
+  /get_version_info:
+    get:
+      description: Gets service version and protocol information.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/bot_msg_pkg_onebot.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/bot_msg_internal_service.VersionInfo'
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Get version info
+      tags:
+      - system
+  /healthz:
+    get:
+      description: Returns service health.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Health check
+      tags:
+      - system
+  /send_group_msg:
+    post:
+      consumes:
+      - application/json
+      description: Sends a group message through the configured OneBot v11 endpoint.
+      parameters:
+      - description: Group message payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server.sendGroupMsgRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/bot_msg_pkg_onebot.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/bot_msg_internal_service.SendResult'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/bot_msg_pkg_onebot.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/bot_msg_pkg_onebot.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Send group message
+      tags:
+      - messages
+  /send_msg:
+    post:
+      consumes:
+      - application/json
+      description: Sends a private or group message. If message_type is omitted, group_id
+        takes precedence.
+      parameters:
+      - description: Message payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server.sendMsgRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/bot_msg_pkg_onebot.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/bot_msg_internal_service.SendResult'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/bot_msg_pkg_onebot.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/bot_msg_pkg_onebot.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Send message
+      tags:
+      - messages
+  /send_private_msg:
+    post:
+      consumes:
+      - application/json
+      description: Sends a private message through the configured OneBot v11 endpoint.
+      parameters:
+      - description: Private message payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_server.sendPrivateMsgRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/bot_msg_pkg_onebot.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/bot_msg_internal_service.SendResult'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/bot_msg_pkg_onebot.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/bot_msg_pkg_onebot.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Send private message
+      tags:
+      - messages
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
