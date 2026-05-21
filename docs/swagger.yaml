@@ -148,6 +148,7 @@ definitions:
       user_id:
         type: integer
     type: object
+host: 127.0.0.1:8080
 info:
   contact: {}
   description: Bot Msg can run as a OneBot v11 HTTP proxy service backed by a OneBot
@@ -477,6 +478,8 @@ paths:
       summary: Send private message
       tags:
       - messages
+schemes:
+- http
 securityDefinitions:
   ApiKeyAuth:
     in: header

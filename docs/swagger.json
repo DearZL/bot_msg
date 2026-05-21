@@ -1,4 +1,7 @@
 {
+    "schemes": [
+        "http"
+    ],
     "swagger": "2.0",
     "info": {
         "description": "Bot Msg can run as a OneBot v11 HTTP proxy service backed by a OneBot HTTP/HTTPS or WS/WSS endpoint.",
@@ -6,6 +9,7 @@
         "contact": {},
         "version": "0.1.0"
     },
+    "host": "127.0.0.1:8080",
     "basePath": "/",
     "paths": {
         "/delete_msg": {

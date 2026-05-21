@@ -20,7 +20,9 @@ import (
 // @title Bot Msg OneBot API
 // @version 0.1.0
 // @description Bot Msg can run as a OneBot v11 HTTP proxy service backed by a OneBot HTTP/HTTPS or WS/WSS endpoint.
+// @host 127.0.0.1:8080
 // @BasePath /
+// @schemes http
 // @securityDefinitions.apikey ApiKeyAuth
 // @in header
 // @name Authorization

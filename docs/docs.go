@@ -784,9 +784,9 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "0.1.0",
-	Host:             "",
+	Host:             "127.0.0.1:8080",
 	BasePath:         "/",
-	Schemes:          []string{},
+	Schemes:          []string{"http"},
 	Title:            "Bot Msg OneBot API",
 	Description:      "Bot Msg can run as a OneBot v11 HTTP proxy service backed by a OneBot HTTP/HTTPS or WS/WSS endpoint.",
 	InfoInstanceName: "swagger",
